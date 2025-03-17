@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Table Layout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="index-page">
+    <div class="container">
+        <h1>Restaurant Table Layout</h1>
+        <div class="table-layout">
+            <div class="kitchen">K - Kitchen</div>
+            {% for i in range(1, 13) %}
+            <div class="table" onclick="selectTable(`{{ i }}`)">
+                <img src="{{ url_for('static', filename='images/table.png') }}" alt="Table {{ i }}">
+                <span>Table {{ i }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function selectTable(tableNumber) {
+            window.location.href = `/table/${tableNumber}`;
+        }
+    </script>
+</body>
+</html>

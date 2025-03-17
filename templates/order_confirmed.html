@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const totalItems = urlParams.get("total_items");
+            const totalAmount = urlParams.get("total_amount");
+
+            document.getElementById("final-total-items").textContent = totalItems;
+            document.getElementById("final-total-amount").textContent = `₹${totalAmount}`;
+        });
+
+        setTimeout(() => {
+            window.location.href = "/";
+        }, 15000);
+    </script>
+    <style>
+        .container {
+            text-align: center;
+            background-color: rgba(20, 3, 3, 0.422);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 1200px;
+            margin: auto;
+        }
+        .checkmark {
+            font-size: 100px;
+            color: green;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .order-summary {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="order-confirmed-page">
+    <div class="container">
+        <h1>✅ Order Confirmed!</h1>
+        <p>Thank you! Your order has been placed.</p>
+        <div class="checkmark">✔️</div>
+        <div class="order-summary">
+            <p>Total Items: <span id="final-total-items">0</span></p>
+            <p>Total Amount with GST (12%): <span id="final-total-amount">₹0.00</span></p>
+        </div>
+        <br><br>
+        <p>Redirecting to home in 15 seconds...</p>
+    </div>
+</body>
+</html>

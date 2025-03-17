@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #1f1c2c, #928dab, #1f1c2c, #928dab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            overflow-x: hidden;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+        .menu-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        .menu-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .menu-item p {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+        .count-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .count-control button {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .count-control button:hover {
+            background: #e84118;
+        }
+        .count-control span {
+            margin: 0 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Cart Section */
+        .cart {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 20px;
+        }
+        .cart h2 {
+            font-size: 1.8rem;
+        }
+        .cart ul {
+            list-style: none;
+            margin: 10px 0;
+        }
+        .cart ul li {
+            font-size: 1.1rem;
+            margin: 5px 0;
+        }
+        .cart-btn {
+            background: #1dd1a1;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        .cart-btn:hover {
+            background: #10ac84;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Table {{ table_number }} - Menu</h1>
+        <div class="menu-grid" id="menu-grid"></div>
+        <div class="cart">
+            <h2>🛒 Your Cart</h2>
+            <ul id="cart-items"></ul>
+            <p>Total: ₹<span id="total-amount">0</span></p>
+            <button class="cart-btn" onclick="confirmOrder()">Confirm Order</button>
+        </div>
+    </div>
+    <script>
+        let cart = [];
+        const menuItems = [
+            { name: "Mix Veg", price: 120, category: "veg" },
+            { name: "Dal Tadka", price: 90, category: "veg" },
+            { name: "Dal Makhani", price: 130, category: "veg" },
+            { name: "Matar Paneer", price: 140, category: "veg" },
+            { name: "Paneer Butter Masala", price: 150, category: "veg" },
+            { name: "Butter Chicken", price: 180, category: "non-veg" },
+            { name: "Kadai Chicken", price: 190, category: "non-veg" },
+            { name: "Egg Curry", price: 110, category: "non-veg" },
+            { name: "Tandoori Roti", price: 20, category: "veg" },
+            { name: "Butter Naan", price: 40, category: "veg" },
+            { name: "Garlic Naan", price: 50, category: "veg" },
+            { name: "Jeera Rice", price: 80, category: "veg" },
+            { name: "Veg. Pulao", price: 100, category: "veg" },
+            { name: "Curd", price: 30, category: "veg" },
+            { name: "Masala Dosa", price: 70, category: "veg" },
+            { name: "Onion Dosa", price: 80, category: "veg" },
+            { name: "Paneer Dosa", price: 90, category: "veg" },
+            { name: "Spring Roll", price: 120, category: "veg" },
+            { name: "Honey Chilli Potato", price: 130, category: "veg" },
+            { name: "Chilli Chicken", price: 180, category: "non-veg" },
+            { name: "Veg. Noodles", price: 140, category: "veg" },
+            { name: "Chicken Noodles", price: 160, category: "non-veg" },
+            { name: "Red Sauce Pasta", price: 140, category: "veg" },
+            { name: "White Sauce Pasta", price: 150, category: "veg" },
+            { name: "Veg Momos", price: 60, category: "veg" },
+            { name: "Chicken Momos", price: 80, category: "non-veg" },
+            { name: "Paneer Roll", price: 100, category: "veg" },
+            { name: "Chicken Roll", price: 120, category: "non-veg" },
+            { name: "Tea", price: 20, category: "drink" },
+            { name: "Coffee", price: 30, category: "drink" },
+            { name: "Orange Juice", price: 50, category: "drink" },
+            { name: "Mango Juice", price: 60, category: "drink" },
+            { name: "Lemonade", price: 40, category: "drink" },
+            { name: "Masala Chai", price: 25, category: "drink" },
+            { name: "Green Tea", price: 35, category: "drink" },
+            { name: "Iced Tea", price: 45, category: "drink" },
+            { name: "Cappuccino", price: 70, category: "drink" },
+            { name: "Latte", price: 80, category: "drink" },
+            { name: "Mojito", price: 90, category: "drink" },
+            { name: "Pina Colada", price: 120, category: "drink" },
+            { name: "Virgin Mojito", price: 60, category: "drink" },
+            { name: "Hot Chocolate", price: 90, category: "drink" },
+            { name: "Milkshake", price: 100, category: "drink" },
+            { name: "Banana Smoothie", price: 110, category: "drink" },
+            { name: "Strawberry Shake", price: 120, category: "drink" },
+            { name: "Mango Shake", price: 130, category: "drink" },
+            { name: "Chocolate Shake", price: 140, category: "drink" },
+            { name: "Vanilla Shake", price: 150, category: "drink" },
+            { name: "Butterscotch Shake", price: 160, category: "drink" },
+            { name: "Oreo Shake", price: 170, category: "drink" }
+        ];
+
+        function updateCount(name, change) {
+            let item = cart.find(i => i.name === name);
+            if (!item) {
+                item = { name, price: menuItems.find(i => i.name === name).price, quantity: 0 };
+                cart.push(item);
+            }
+            item.quantity = Math.max(0, item.quantity + change);
+            document.getElementById(`${name}-count`).textContent = item.quantity;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById("cart-items");
+            const totalAmountElement = document.getElementById("total-amount");
+            let totalAmount = 0;
+            cartItems.innerHTML = cart.filter(item => item.quantity > 0).map(item => {
+                totalAmount += item.price * item.quantity;
+                return `<li>${item.name} - ${item.quantity} x ₹${item.price}</li>`;
+            }).join("");
+            totalAmountElement.textContent = totalAmount;
+        }
+
+        function confirmOrder() {
+            const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            fetch("/confirm_order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    table_number: `{{ table_number }}`, 
+                    items: cart.filter(item => item.quantity > 0),
+                    total_amount: totalAmount
+                })
+            }).then(response => response.json()).then(data => {
+                if (data.status === "success") window.location.href = data.redirect_url;
+            }).catch(error => console.error("Error:", error));
+        }
+
+        const menuContainer = document.getElementById("menu-grid");
+        menuItems.forEach(item => {
+            menuContainer.innerHTML += `
+                <div class="menu-item">
+                    <img src="/static/images/${item.name.replace(/\s+/g, '_').toLowerCase()}.jpg" alt="${item.name}">
+                    <p>${item.name} - ₹${item.price}</p>
+                    <div class="count-control">
+                        <button onclick="updateCount('${item.name}', -1)">−</button>
+                        <span id="${item.name}-count">0</span>
+                        <button onclick="updateCount('${item.name}', 1)">+</button>
+                    </div>
+                </div>`;
+        });
+    </script>
+</body>
+</html>

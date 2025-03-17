@@ -255,3 +255,182 @@ h1.menu-header {
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    /* Adjust the background gradient animation for smoother performance */
+    html, body {
+        overflow-y: auto;
+        animation: gradientBG 30s ease infinite; /* Slower animation for better performance */
+    }
+
+    /* Center the container and adjust padding */
+    .container {
+        padding: 20px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    /* Adjust heading sizes */
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h1.menu-header {
+        font-size: 2rem;
+    }
+
+    /* Adjust menu grid for mobile */
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .menu-item {
+        padding: 10px;
+    }
+
+    .menu-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .menu-item p {
+        font-size: 1rem;
+    }
+
+    /* Adjust cart section */
+    .cart {
+        padding: 15px;
+    }
+
+    .cart h2 {
+        font-size: 1.2rem;
+    }
+
+    #cart-items li {
+        font-size: 14px;
+    }
+
+    #total-amount {
+        font-size: 1rem;
+    }
+
+    /* Adjust buttons */
+    .cart-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    /* Adjust table layout */
+    .table-layout {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
+        gap: 10px;
+    }
+
+    .kitchen {
+        grid-column: span 2;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .table {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .table img {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Adjust category headings */
+    .category-heading {
+        font-size: 1.2rem;
+        margin: 15px 0 5px;
+    }
+}
+
+/* Smaller Mobile Devices */
+@media (max-width: 480px) {
+    /* Further adjust menu grid for very small screens */
+    .menu-grid {
+        grid-template-columns: 1fr; /* 1 column for very small screens */
+    }
+
+    /* Adjust table layout for very small screens */
+    .table-layout {
+        grid-template-columns: 1fr; /* 1 column for very small screens */
+    }
+
+    .kitchen {
+        grid-column: span 1;
+    }
+
+    /* Adjust heading sizes */
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h1.menu-header {
+        font-size: 1.8rem;
+    }
+
+    /* Adjust menu item padding and font sizes */
+    .menu-item {
+        padding: 8px;
+    }
+
+    .menu-item p {
+        font-size: 0.9rem;
+    }
+
+    /* Adjust cart section */
+    .cart {
+        padding: 10px;
+    }
+
+    .cart h2 {
+        font-size: 1.1rem;
+    }
+
+    #cart-items li {
+        font-size: 13px;
+    }
+
+    #total-amount {
+        font-size: 0.9rem;
+    }
+
+    /* Adjust buttons */
+    .cart-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    /* Adjust table padding and font sizes */
+    .table {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .table img {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* Adjust category headings */
+    .category-heading {
+        font-size: 1.1rem;
+        margin: 10px 0 5px;
+    }
+}

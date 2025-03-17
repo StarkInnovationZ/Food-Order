@@ -256,107 +256,115 @@ h1.menu-header {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Mobile Styles */
+/* Enable scrolling on mobile */
+html, body {
+    overflow-y: auto; /* Allow vertical scrolling */
+    height: auto; /* Allow the body to expand based on content */
+}
+
+/* Mobile-specific styles */
 @media (max-width: 768px) {
     /* Adjust the background gradient animation for smoother performance */
     html, body {
-        overflow-y: auto;
         animation: gradientBG 30s ease infinite; /* Slower animation for better performance */
     }
 
-    /* Center the container and adjust padding */
+    /* Resize the container and adjust padding */
     .container {
-        padding: 20px;
-        width: 90%;
-        margin: 20px auto;
+        padding: 15px;
+        width: 95%; /* Make the container take up most of the screen width */
+        margin: 10px auto; /* Add some margin for spacing */
+        border-radius: 10px; /* Slightly smaller border radius for mobile */
     }
 
     /* Adjust heading sizes */
     h1 {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Smaller font size for mobile */
+        margin-bottom: 15px; /* Reduce margin */
     }
 
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.5rem; /* Smaller font size for mobile */
     }
 
     h1.menu-header {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Smaller font size for mobile */
     }
 
     /* Adjust menu grid for mobile */
     .menu-grid {
         grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
-        gap: 10px;
-        padding: 10px;
+        gap: 10px; /* Smaller gap between items */
+        padding: 10px; /* Reduce padding */
     }
 
     .menu-item {
-        padding: 10px;
+        padding: 10px; /* Reduce padding */
     }
 
     .menu-item img {
-        width: 80px;
-        height: 80px;
+        width: 80px; /* Smaller image size */
+        height: 80px; /* Smaller image size */
     }
 
     .menu-item p {
-        font-size: 1rem;
+        font-size: 1rem; /* Smaller font size */
     }
 
     /* Adjust cart section */
     .cart {
-        padding: 15px;
+        padding: 15px; /* Reduce padding */
+        margin-top: 15px; /* Reduce margin */
     }
 
     .cart h2 {
-        font-size: 1.2rem;
+        font-size: 1.2rem; /* Smaller font size */
     }
 
     #cart-items li {
-        font-size: 14px;
+        font-size: 14px; /* Smaller font size */
     }
 
     #total-amount {
-        font-size: 1rem;
+        font-size: 1rem; /* Smaller font size */
     }
 
     /* Adjust buttons */
     .cart-btn {
-        padding: 10px 20px;
-        font-size: 14px;
+        padding: 10px 20px; /* Smaller padding */
+        font-size: 14px; /* Smaller font size */
     }
 
     /* Adjust table layout */
     .table-layout {
         grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
-        gap: 10px;
+        gap: 10px; /* Smaller gap */
     }
 
     .kitchen {
-        grid-column: span 2;
-        padding: 10px;
-        font-size: 16px;
+        grid-column: span 2; /* Span 2 columns */
+        padding: 10px; /* Reduce padding */
+        font-size: 16px; /* Smaller font size */
     }
 
     .table {
-        padding: 15px;
-        font-size: 16px;
+        padding: 15px; /* Reduce padding */
+        font-size: 16px; /* Smaller font size */
     }
 
     .table img {
-        width: 80px;
-        height: 80px;
+        width: 80px; /* Smaller image size */
+        height: 80px; /* Smaller image size */
     }
 
     /* Adjust category headings */
     .category-heading {
-        font-size: 1.2rem;
-        margin: 15px 0 5px;
+        font-size: 1.2rem; /* Smaller font size */
+        margin: 15px 0 5px; /* Reduce margin */
     }
 }
 
-/* Smaller Mobile Devices */
+/* Smaller Mobile Devices (e.g., phones) */
 @media (max-width: 480px) {
     /* Further adjust menu grid for very small screens */
     .menu-grid {
@@ -369,68 +377,68 @@ h1.menu-header {
     }
 
     .kitchen {
-        grid-column: span 1;
+        grid-column: span 1; /* Span 1 column */
     }
 
     /* Adjust heading sizes */
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem; /* Even smaller font size */
     }
 
     h2 {
-        font-size: 1.3rem;
+        font-size: 1.3rem; /* Even smaller font size */
     }
 
     h1.menu-header {
-        font-size: 1.8rem;
+        font-size: 1.6rem; /* Even smaller font size */
     }
 
     /* Adjust menu item padding and font sizes */
     .menu-item {
-        padding: 8px;
+        padding: 8px; /* Even smaller padding */
     }
 
     .menu-item p {
-        font-size: 0.9rem;
+        font-size: 0.9rem; /* Even smaller font size */
     }
 
     /* Adjust cart section */
     .cart {
-        padding: 10px;
+        padding: 10px; /* Even smaller padding */
     }
 
     .cart h2 {
-        font-size: 1.1rem;
+        font-size: 1.1rem; /* Even smaller font size */
     }
 
     #cart-items li {
-        font-size: 13px;
+        font-size: 13px; /* Even smaller font size */
     }
 
     #total-amount {
-        font-size: 0.9rem;
+        font-size: 0.9rem; /* Even smaller font size */
     }
 
     /* Adjust buttons */
     .cart-btn {
-        padding: 8px 16px;
-        font-size: 13px;
+        padding: 8px 16px; /* Even smaller padding */
+        font-size: 13px; /* Even smaller font size */
     }
 
     /* Adjust table padding and font sizes */
     .table {
-        padding: 10px;
-        font-size: 14px;
+        padding: 10px; /* Even smaller padding */
+        font-size: 14px; /* Even smaller font size */
     }
 
     .table img {
-        width: 70px;
-        height: 70px;
+        width: 70px; /* Even smaller image size */
+        height: 70px; /* Even smaller image size */
     }
 
     /* Adjust category headings */
     .category-heading {
-        font-size: 1.1rem;
-        margin: 10px 0 5px;
+        font-size: 1.1rem; /* Even smaller font size */
+        margin: 10px 0 5px; /* Even smaller margin */
     }
 }

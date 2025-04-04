@@ -1,23 +1,26 @@
 import socket
 import requests
 from flask import Flask, render_template, request, jsonify
-    
+
 app = Flask(__name__)
 
 # Telegram Bot Details
 TELEGRAM_BOT_TOKEN = "7482322952:AAGQtIZCnJ-Yp0UBsCEp0F0IdhA8FGwKaBc"
 TELEGRAM_CHAT_ID = "1480524595"
 
-# ESP32 Communication (Simulated)
+# ESP32 Communication (Socket)
 def send_to_esp32(message):
-    # PORT = 8080
-    # ESP32_IP = "192.168.142.240"  # Change this to your ESP32's IP
-    print(f"Sending to ESP32: {message}")
-    # client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # client.connect((ESP32_IP, PORT))
-    # client.sendall((message + "\n").encode())  # Send message with newline
-    # client.close()
-    print("DONE")
+    ESP32_IP = "192.168.1.117"  # Change to your ESP32's IP
+    PORT = 8080
+    try:
+        print(f"Sending to ESP32: {message}")
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.connect((ESP32_IP, PORT))
+        client.sendall((message + "\n").encode())  # Send message with newline
+        client.close()
+        print("✅ DONE")
+    except Exception as e:
+        print(f"❌ Failed to send to ESP32: {e}")
 
 # Telegram Bot Function
 def send_to_telegram(message):
@@ -44,21 +47,20 @@ def confirm_order():
     data = request.json
     table_number = data["table_number"]
     items = data["items"]
-    total_amount = float(data["total_amount"])  # Convert total_amount to float
-    total_amount_with_gst = total_amount + (total_amount * 0.12)  # Add 12% GST
-    total_items = sum(item["quantity"] for item in items)  # Calculate total items
+    total_amount = float(data["total_amount"])
+    total_amount_with_gst = round(total_amount + (total_amount * 0.12), 2)
+    total_items = sum(item["quantity"] for item in items)
 
-    # Print order details
     print(f"\n📌 Order Confirmed for Table {table_number}:")
     for item in items:
         print(f"➡️ {item['name']} - {item['quantity']} x ₹{item['price']}")
     print(f"💰 Total Amount (with GST): ₹{total_amount_with_gst}, 🛒 Total Items: {total_items}\n")
 
-    # Send confirmation to Telegram
+    # Telegram message
     message = f"✅ Order confirmed for Table {table_number}:\n"
     for item in items:
         message += f"🍽 {item['name']} - {item['quantity']} x ₹{item['price']}\n"
-    message += f"\n💵 Total Amount (with GST): ₹{total_amount_with_gst}, 🛒 Total Items: {total_items}"
+    message += f"\n💵 Total (with GST): ₹{total_amount_with_gst}\n🛒 Items: {total_items}"
     
     send_to_telegram(message)
     
